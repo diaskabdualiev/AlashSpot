@@ -35,6 +35,21 @@ void Spot::setupServer() {
     _server.maxUploadSize = _maxFileUpload;
     _server.listen(_port);
 
+
+    // Add CORS headers globally
+    DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
+    DefaultHeaders::Instance().addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "Accept, Content-Type, Authorization");
+    DefaultHeaders::Instance().addHeader("Access-Control-Allow-Credentials", "true");
+    DefaultHeaders::Instance().addHeader("Server", _appName);
+
+    // Handle OPTIONS requests for CORS
+    _server.on("/api/*", HTTP_OPTIONS, [](PsychicRequest *request) {
+        PsychicResponse response(request);
+        response.setCode(200);
+        return response.send();
+    });
+
     // WIFI
     _server.on("/api/wifi/scan", HTTP_GET, _wifiService.handleScan);
     _server.on("/api/wifi/networks", HTTP_GET,
@@ -156,14 +171,6 @@ void Spot::setupServer() {
 #ifdef SERVE_CONFIG_FILES
     _server.serveStatic("/api/config/", ESPFS, "/config/");
 #endif
-
-#if defined(ENABLE_CORS)
-    ESP_LOGV(TAG, "Enabling CORS headers");
-    DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", CORS_ORIGIN);
-    DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "Accept, Content-Type, Authorization");
-    DefaultHeaders::Instance().addHeader("Access-Control-Allow-Credentials", "true");
-#endif
-    DefaultHeaders::Instance().addHeader("Server", _appName);
 }
 
 void Spot::startServices() {

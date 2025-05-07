@@ -26,6 +26,10 @@
 #include <WWWData.h>
 #endif
 
+#ifndef ENABLE_CORS
+#define ENABLE_CORS 1
+#endif
+
 #ifndef CORS_ORIGIN
 #define CORS_ORIGIN "*"
 #endif
