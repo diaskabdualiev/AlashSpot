@@ -7,3 +7,17 @@ __pycache__/
 *.py[cod]
 *$py.class
 .pio
+
+.DS_Store
+
+.vscode/
+
+# SSL/TLS certificates
+src/certs/
+*.pem
+*.der
+*.bin
+*.crt
+*.key
+*.csr
+*.srl
