@@ -56,16 +56,16 @@ void Spot::setupServer() {
         return _apService.endpoint.handleStateUpdate(request, json);
     });
 
-    // CAMERA
-    _server.on("/api/camera/still", HTTP_GET,
-               [this](PsychicRequest *request) { return _cameraService.cameraStill(request); });
-    _server.on("/api/camera/stream", HTTP_GET,
-               [this](PsychicRequest *request) { return _cameraService.cameraStream(request); });
-    _server.on("/api/camera/settings", HTTP_GET,
-               [this](PsychicRequest *request) { return _cameraService.endpoint.getState(request); });
-    _server.on("/api/camera/settings", HTTP_POST, [this](PsychicRequest *request, JsonVariant &json) {
-        return _cameraService.endpoint.handleStateUpdate(request, json);
-    });
+    // // CAMERA
+    // _server.on("/api/camera/still", HTTP_GET,
+    //            [this](PsychicRequest *request) { return _cameraService.cameraStill(request); });
+    // _server.on("/api/camera/stream", HTTP_GET,
+    //            [this](PsychicRequest *request) { return _cameraService.cameraStream(request); });
+    // _server.on("/api/camera/settings", HTTP_GET,
+    //            [this](PsychicRequest *request) { return _cameraService.endpoint.getState(request); });
+    // _server.on("/api/camera/settings", HTTP_POST, [this](PsychicRequest *request, JsonVariant &json) {
+    //     return _cameraService.endpoint.handleStateUpdate(request, json);
+    // });
 
     // SYSTEM
     _server.on("/api/system/reset", HTTP_POST, system_service::handleReset);
