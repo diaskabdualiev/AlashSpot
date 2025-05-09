@@ -1,4 +1,4 @@
-FROM node:20-alpine as builder
+FROM --platform=$BUILDPLATFORM node:20-alpine as builder
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ COPY . .
 RUN pnpm build
 
 # Финальный образ
-FROM node:20-alpine
+FROM --platform=$TARGETPLATFORM node:20-alpine
 
 WORKDIR /app
 
